@@ -6,7 +6,7 @@ const app = express();
 
 module.exports = () => {
     // connect to mongo
-    require('./mogoose')()
+    const {mongoose} = require('./mogoose')()
 
     // parse rerquests
     app.use(express.json())
@@ -16,9 +16,15 @@ module.exports = () => {
     routes(express, app)
 
     app.use('/', (err, req,res,next) => {
+        let error = err.message;
+        let messages = {};
+        for(i in err.errors) {
+            messages[i] = err.errors[i].message
+        }
         const response = {
             success: 0,
-            message: err.message
+            message: err.message,
+            validations: messages
         }
         res.status(500).send(response)
     });

@@ -2,6 +2,7 @@ module.exports = (express, app) => {
     const router = express.Router();
     const cartRoutes = require('./cart')
     const productRoutes = require('./product')
+    const userRoutes = require('./user')
 
     const routes = [
         {
@@ -11,6 +12,10 @@ module.exports = (express, app) => {
         {
             'prefix': '/cart',
             'route': cartRoutes(express)
+        },
+        {
+            'prefix': '/',
+            'route': userRoutes(express)
         }
     ];
 

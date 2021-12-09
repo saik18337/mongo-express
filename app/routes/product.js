@@ -11,7 +11,7 @@ module.exports = (express) => {
 
     router.put('/:id',  product.update)
 
-    router.delete('/:id',  product.delete)
+    router.delete('/:id',  product.delete)  
 
     return router
 }

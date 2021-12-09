@@ -10,5 +10,5 @@ module.exports = () => {
     connection.on('error', (err) => {
         console.log('Error while connecting', err)
     })
-    //return db;
+    return { mongoose };
 }

@@ -1,3 +1,4 @@
+const { constants } = require('../constants/index');
 const fs = require('fs')
 exports.loadController = (controller) => {
     const file = './app/controllers/'+controller+'.js'
@@ -22,4 +23,21 @@ exports.loadModel = (model) => {
     }
     const Model = require(module);
     return Model;
+}
+
+
+exports.authenticateUser = (req, res, next) => {
+    const authHeader = req.header('authorization');
+    if(!authHeader) {
+        throw new Error('Authentication Missing')
+    }
+    const jwt = require('jsonwebtoken')
+    const data = jwt.verify(authHeader, constants.JWT_SECRETE)
+    if(data) {
+        req.auth = data;
+        next();
+    }
+    else {
+        throw new Error('Invalid Token')
+    }
 }
